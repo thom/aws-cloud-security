@@ -113,18 +113,26 @@ Invoke the web service using the application load balancer URL:
 
 The architecture has several obvious poor practices as it relates to security:
 
-1. WebAppSG: Even though the Recipe Web Service is behind an Application Load
-   Balancer, its security group permits ingress traffic from the internet to
-   ports 22, 5000 and 80 exposing the server to attacks. It also allows all
-   egress traffic to any IP address.
-2. AppLoadBalancerSG: The security group used by the Application Load Balancer
-   is using port 80 (HTTP) instead of 443 (HTTPS).
-3. RecipeWebServiceInstance: The Recipe Web Service Instance is placed behind an
-   Application Load Balancer but still located in a public subnet.
-4. S3BucketRecipesSecret: There is no encryption configured for the S3 bucket, allowing anyone with access to the account to read it.
-5. InstanceRole, InstanceProfileRole and InstanceRolePolicy-C3: The IAM instance
-   profile role used by the web service does not restrict the granted S3 actions
-   and thus violates the least privilege principle.
+#### 1. WebAppSG
+Even though the Recipe Web Service is behind an Application Load Balancer, its
+security group permits ingress traffic from the internet to ports 22, 5000 and
+80 exposing the server to attacks. It also allows all egress traffic to any IP
+address.
+
+#### 2. AppLoadBalancerSG:
+The security group used by the Application Load Balancer is using port 80 (HTTP)
+instead of 443 (HTTPS).
+
+#### 3. RecipeWebServiceInstance: The Recipe Web Service Instance is placed behind an
+Application Load Balancer but still located in a public subnet.
+
+#### 4. S3BucketRecipesSecret: 
+There is no encryption configured for the S3 bucket, allowing anyone with access
+to the account to read it.
+
+#### 5. InstanceRole, InstanceProfileRole and InstanceRolePolicy-C3:
+The IAM instance profile role used by the web service does not restrict the
+granted S3 actions and thus violates the least privilege principle.
 
 See [E1T4.txt](answers/E1T4.txt).
 
