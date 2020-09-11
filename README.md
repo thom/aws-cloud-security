@@ -17,6 +17,24 @@
 - Scripts simulating an attack will be run from a separate instance which is in an un-trusted subnet.
 - The scripts will attempt to break into the web application instance using the public IP and attempt to access data in the secret recipe S3 bucket.
 
+### Task 2: Review CloudFormation Template
+
+#### VPC Stack for the underlying network:
+- A VPC with 2 public subnets, one private subnet, and internet gateways etc for internet access
+- See [c3-vpc.yml](cfn/c3-vpc.yml)
+
+### S3 bucket stack:
+- 2 S3 buckets that will contain data objects for the application
+- See [c3-s3.yml](cfn/c3-s3.yml)
+
+#### Application stack:
+- An EC2 instance that will act as an external attacker from which we will test the ability of our environment to handle threats
+- An EC2 instance that will be running a simple web service
+- Application LoadBalancer
+- Security groups
+- IAM role
+- See [c3-app.yml](cfn/c3-app.yml)
+
 ## Requirements
 
 Graded according to the [Project Rubric](https://review.udacity.com/#!/rubrics/2800/view).
