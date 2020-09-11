@@ -23,7 +23,7 @@
 - A VPC with 2 public subnets, one private subnet, and internet gateways etc for internet access
 - See [c3-vpc.yml](cfn/c3-vpc.yml)
 
-### S3 bucket stack:
+#### S3 bucket stack:
 - 2 S3 buckets that will contain data objects for the application
 - See [c3-s3.yml](cfn/c3-s3.yml)
 
@@ -34,6 +34,66 @@
 - Security groups
 - IAM role
 - See [c3-app.yml](cfn/c3-app.yml)
+
+### Task 3: Deployment of Initial Infrastructure
+
+The objective is to deploy the CloudFormation stacks that will create the above environment.
+ 
+The AMIs specified in the CloudFormation template exist in the us-east-1 (N. Virginia) region. It is necessary to set this as default region when deploying resources for this project.
+
+#### 1. Deploy the infrastructure
+
+##### Deploy the S3 buckets
+```
+aws cloudformation create-stack --region us-east-1 --stack-name c3-s3 --template-body file://starter/c3-s3.yml
+```
+ 
+Expected example output:
+```
+{
+    "StackId": "arn:aws:cloudformation:us-east-1:4363053XXXXXX:stack/c3-s3/70dfd370-2118-11ea-aea4-12d607a4fd1c"
+}
+```
+
+##### Deploy the VPC and Subnets
+```
+aws cloudformation create-stack --region us-east-1 --stack-name c3-vpc --template-body file://starter/c3-vpc.yml
+```
+ 
+Expected example output:
+```
+{
+    "StackId": "arn:aws:cloudformation:us-east-1:4363053XXXXXX:stack/c3-vpc/70dfd370-2118-11ea-aea4-12d607a4fd1c"
+}
+```
+ 
+##### Deploy the Application Stack 
+Specify a pre-existing key-pair name:
+
+```
+aws cloudformation create-stack --region us-east-1 --stack-name c3-app --template-body file://starter/c3-app.yml --parameters ParameterKey=KeyPair,ParameterValue=<add key pair name> --capabilities CAPABILITY_IAM
+```
+ 
+Expected example output:
+```
+{
+    "StackId": "arn:aws:cloudformation:us-east-1:4363053XXXXXX:stack/c3-app/70dfd370-2118-11ea-aea4-12d607a4fd1c"
+}
+```
+ 
+#### 2. Upload data to S3 buckets
+Upload the free recipes to the free recipe S3 bucket:  
+```
+aws s3 cp free_recipe.txt s3://<BucketNameRecipesFree>/ --region us-east-1
+```
+ 
+Upload the secret recipes to the secret recipe S3 bucket:  
+```
+aws s3 cp secret_recipe.txt s3://<BucketNameRecipesSecret>/ --region us-east-1
+```
+
+#### 3. Test the application
+Invoke the web service using the application load balancer URL: [http://<ApplicationURL>/free_recipe](http://<ApplicationURL>/free_recipe)
 
 ## Requirements
 
