@@ -115,13 +115,13 @@ The architecture has several obvious poor practices as it relates to security:
 
 #### 1. WebAppSG
 Even though the Recipe Web Service is behind an Application Load Balancer, its
-security group permits ingress traffic from the internet to ports 22, 5000 and
-80 exposing the server to attacks. It also allows all egress traffic to any IP
-address.
+security group permits ingress traffic from the internet to all ports (including
+22, 5000 and 80) exposing the server to attacks. It also allows all egress
+traffic to any IP address.
 
 #### 2. AppLoadBalancerSG:
-The security group used by the Application Load Balancer is using port 80 (HTTP)
-instead of 443 (HTTPS).
+The security group used by the Application Load Balancer is not forwarding port
+80 (HTTP) to 443 (HTTPS).
 
 #### 3. RecipeWebServiceInstance: The Recipe Web Service Instance is placed behind an
 Application Load Balancer but still located in a public subnet.
@@ -140,11 +140,38 @@ See [E1T4.txt](answers/E1T4.txt).
 
 ### Task 1: Enable Security Monitoring using AWS Native Tools
 
-TBD
+Enable the following services:
+- AWS Config
+- AWS Security Hub
+- AWS Inspector
+- AWS Guard Duty
 
 ### Task 2: Identify and Triage Vulnerabilities
 
-TBD
+![AWS Config showing non-compliant rules](screenshots/E2T2_config.png) _AWS Config showing non-compliant rules_
+
+![AWS Inspector showing scan results](screenshots/E2T2_inspector.png) _AWS Inspector showing scan results_
+
+![AWS Security Hub showing compliance standards for CIS foundations](screenshots/E2T2_securityhub.png) _AWS Security Hub showing compliance standards for CIS foundations_
+
+Recommendations on how to remediate the vulnerabilities:
+1. S3 buckets should have server-side encryption enabled: Enable S3 server-side
+   encryption
+
+2. The VPC default security group should not allow inbound and outbound traffic:
+   Update default security group of every VPC to restrict all traffic
+
+3. VPC flow logging should be enabled in all VPCs: Enable VPC flow logging for
+   all VPCs
+
+4. Application Load Balancer should be configured to redirect all HTTP requests
+   to HTTPS: Reconfigure the Application Load Balancer to redirect all HTTP
+   requests to HTTPS
+
+5. Attached EBS volumes should be encrypted at-rest: Enable EBS server-side
+   encryption 
+
+See [E2T2.txt](answers/E2T2.txt).
 
 ## Exercise 3 - Attack Simulation
 

@@ -1,0 +1,22 @@
+Research and analyze which of the vulnerabilities appear to be related to the
+code that was deployed for the environment in this project. Provide
+recommendations on how to remediate the vulnerabilities. Submit your findings in
+E2T2.txt
+
+Recommendations on how to remediate the vulnerabilities
+
+1. S3 buckets should have server-side encryption enabled: Enable S3 server-side
+   encryption
+
+2. The VPC default security group should not allow inbound and outbound traffic:
+   Update default security group of every VPC to restrict all traffic
+
+3. VPC flow logging should be enabled in all VPCs: Enable VPC flow logging for
+   all VPCs
+
+4. Application Load Balancer should be configured to redirect all HTTP requests
+   to HTTPS: Reconfigure the Application Load Balancer to redirect all HTTP
+   requests to HTTPS
+
+5. Attached EBS volumes should be encrypted at-rest: Enable EBS server-side
+   encryption 
