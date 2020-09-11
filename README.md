@@ -93,7 +93,7 @@ aws s3 cp secret_recipe.txt s3://<BucketNameRecipesSecret>/ --region us-east-1
 ```
 
 #### 3. Test the application
-Invoke the web service using the application load balancer URL: [http://<ApplicationURL>/free_recipe](http://<ApplicationURL>/free_recipe)
+Invoke the web service using the application load balancer URL: `http://<ApplicationURL>/free_recipe`
 
 ## Requirements
 
