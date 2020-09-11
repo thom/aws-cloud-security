@@ -58,25 +58,25 @@ resources for this project.
 
 ##### Deploy the S3 buckets
 ```
-aws cloudformation create-stack --region us-east-1 --stack-name c3-s3 --template-body file://starter/c3-s3.yml
+aws cloudformation create-stack --region us-east-1 --stack-name c3-s3 --template-body file://c3-s3.yml
 ```
  
 Expected example output:
 ```
 {
-    "StackId": "arn:aws:cloudformation:us-east-1:4363053XXXXXX:stack/c3-s3/70dfd370-2118-11ea-aea4-12d607a4fd1c"
+    "StackId": "arn:aws:cloudformation:us-east-1:853001741663:stack/c3-s3/b60f3770-f46b-11ea-bc10-1221171ce649"
 }
 ```
 
 ##### Deploy the VPC and Subnets
 ```
-aws cloudformation create-stack --region us-east-1 --stack-name c3-vpc --template-body file://starter/c3-vpc.yml
+aws cloudformation create-stack --region us-east-1 --stack-name c3-vpc --template-body file://c3-vpc.yml
 ```
  
 Expected example output:
 ```
 {
-    "StackId": "arn:aws:cloudformation:us-east-1:4363053XXXXXX:stack/c3-vpc/70dfd370-2118-11ea-aea4-12d607a4fd1c"
+    "StackId": "arn:aws:cloudformation:us-east-1:853001741663:stack/c3-vpc/8ce78590-f46c-11ea-9b06-1214c28caebf"
 }
 ```
  
@@ -84,13 +84,13 @@ Expected example output:
 Specify a pre-existing key-pair name:
 
 ```
-aws cloudformation create-stack --region us-east-1 --stack-name c3-app --template-body file://starter/c3-app.yml --parameters ParameterKey=KeyPair,ParameterValue=<add key pair name> --capabilities CAPABILITY_IAM
+aws cloudformation create-stack --region us-east-1 --stack-name c3-app --template-body file://c3-app.yml --parameters ParameterKey=KeyPair,ParameterValue=<add key pair name> --capabilities CAPABILITY_IAM
 ```
  
 Expected example output:
 ```
 {
-    "StackId": "arn:aws:cloudformation:us-east-1:4363053XXXXXX:stack/c3-app/70dfd370-2118-11ea-aea4-12d607a4fd1c"
+    "StackId": "arn:aws:cloudformation:us-east-1:853001741663:stack/c3-app/a0c7d760-f46f-11ea-acd6-0e3edd8361ed"
 }
 ```
  
@@ -135,6 +135,66 @@ The IAM instance profile role used by the web service does not restrict the
 granted S3 actions and thus violates the least privilege principle.
 
 See [E1T4.txt](answers/E1T4.txt).
+
+## Exercise 2: Enable Security Monitoring
+
+### Task 1: Enable Security Monitoring using AWS Native Tools
+
+TBD
+
+### Task 2: Identify and Triage Vulnerabilities
+
+TBD
+
+## Exercise 3 - Attack Simulation
+
+### Task 1: Brute force attack to exploit SSH ports facing the internet and an insecure configuration on the server
+
+TBD
+
+### Task 2: Accessing Secret Recipe Data File from S3
+
+TBD
+
+## Exercise 4 - Implement Security Hardening
+
+### Task 1 - Remediation plan
+
+TBD
+
+### Task 2 - Hardening
+
+TBD
+
+### Task 3: Check Monitoring Tools to see if the Changes that were made have Reduced the Number of Findings
+
+TBD
+
+### Task 4: Questions and Analysis
+
+TBD
+
+### Task 5 - Additional Hardening (Optional)
+
+TBD
+
+## Exercise 5 - Designing a DevSecOps Pipeline
+
+### Task 1: Design a DevSecOps pipeline
+
+TBD
+
+### Task 2 - Tools and Documentation
+
+TBD
+
+### Task 3 - Scanning Infrastructure Code (Optional)
+
+TBD
+
+## Exercise 6 - Clean up
+
+TBD
 
 ## Requirements
 
