@@ -253,23 +253,107 @@ cat secret_recipe.txt
 
 ### Task 1 - Remediation plan
 
-TBD
+As a Cloud Architect, you have been asked to apply security best practices to the environment so that it can withstand attacks and be more secure.
+
+#### 1. Changes that can be made to the environment to prevent an SSH brute force attack from the internet
+- Update the application server security group to only permit connections from
+  the Application Load Balancer security group
+- Disable SSH access by removing connections to port 22 from the application
+  server security group
+- Disable SSH password login on the application server instance
+
+#### 2. Neither instance should have had access to the secret recipes bucket; in the instance that API credentials were compromised. how could access to sensitive data have been prevented ?
+- Enforce default encryption through S3 bucket policy
+- Restrict access to only specific IAM roles, i.e. using a new role specifically
+  for accessing the S3 bucket (least privilege access)
 
 ### Task 2 - Hardening
 
-TBD
+#### Remove SSH Vulnerability on the Application Instance
+
+1. To disable SSH password login on the application server instance:
+
+```
+# open the file /etc/ssh/sshd_config
+sudo vi /etc/ssh/sshd_config
+
+# Find this line:
+PasswordAuthentication yes
+
+# change it to:
+PasswordAuthentication no
+
+# save and exit
+
+#restart SSH server
+sudo service ssh restart
+```
+
+2. Run the brute force attack again from Exercise 3, Task 1.  
+
+![Terminal window showing the brute force attack and the remediation](screenshots/E4T2_sshbruteforce.png) _Terminal window showing the brute force attack and the remediation_
+
+#### Apply Network Controls to Restrict Application Server Traffic
+
+Update the security group which is assigned to the web application instance. The
+requirement is that it only allows connections to port 5000 from the public
+subnet where the application load balancer resides.
+
+![Security group change](screenshots/E4T2_networksg.png) _Security group change_
+
+![SSH attempt](screenshots/E4T2_sshattempt.png) _SSH attempt_
+
+#### Least Privilege Access to S3  
+
+Update the IAM policy for the instance profile role used by the web application
+instance to only allow read access to the free recipes S3 bucket.
+
+![Updated IAM policy](screenshots/E4T2_s3iampolicy.png) _Updated IAM policy_
+
+![Failed copy attempt](screenshots/E4T2_s3copy.png) _Failed copy attempt_
+
+#### Apply Default Server-side Encryption to the S3 Bucket
+
+Configure the S3 service to encrypt any objects that are stored going forward by
+default ([Amazon S3 Default Encryption for S3 Buckets](https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html))
+
+![S3 bucket policy](screenshots/E4T2_s3encryption.png) _S3 bucket policy_
 
 ### Task 3: Check Monitoring Tools to see if the Changes that were made have Reduced the Number of Findings
 
-TBD
+1. Go to AWS inspector and run the inspector scan that was run in Exercise 2.
+2. After 20-30 mins - check Security Hub to see if the finding count reduced.
+3. Check AWS Config rules to see if any of the rules are now in compliance.
+4. Submit screenshots of Inspector, Security Hub, and AWS Config titled E4T3_inspector.png, E4T3_securityhub.png, and E4T3_config.png respectively.
+
+**Deliverables**:
+- **E4T3_securityhub.png** - Screenshot of Security Hub after reevaluating the number of findings.
+- **E4T3_config.png** - Screenshot of Config after reevaluating the number of findings.
+- **E4T3_inspector.png** - Screenshot of Inspector after reevaluating the number of findings.
 
 ### Task 4: Questions and Analysis
 
-TBD
+#### 1. What additional architectural change can be made to reduce the internet-facing attack surface of the web application instance?
+- Application Load Balancer should be configured to redirect all HTTP requests
+  to HTTPS: Reconfigure the Application Load Balancer to redirect all HTTP
+  requests to HTTPS
+- Move the web application EC2 instance into a private subnet and use a NAT
+  gateway
 
-### Task 5 - Additional Hardening (Optional)
+#### 2. Assuming the IAM permissions for the S3 bucket are still insecure, would creating VPC private endpoints for S3 prevent the unauthorized access to the secrets bucket?
+- Only for users who are not authenticated on the same account
+- Those users can still access the S3 bucket through the VPC private endpoints
 
-TBD
+#### 3. Will applying default encryption setting to the S3 buckets encrypt the data that already exists?
+- No, applying default encryption setting to the S3 buckets does not encrypt the
+  data that already exists
+- It only applies to future uploads and existing objects must be re-uploaded
+
+#### 4. The changes you made above were done through the console or CLI; describe the outcome if the original CloudFormation templates are applied to this environment?
+- The changes made through the console or the CLI would be reset to the settings
+  from the original CloudFormation templates
+
+See [E4T4.txt](answers/E4T4.txt).
 
 ## Exercise 5 - Designing a DevSecOps Pipeline
 

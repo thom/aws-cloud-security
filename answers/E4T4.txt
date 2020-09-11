@@ -1,0 +1,32 @@
+1. What additional architectural change can be made to reduce the
+   internet-facing attack surface of the web application instance?
+
+- Application Load Balancer should be configured to redirect all HTTP requests
+  to HTTPS: Reconfigure the Application Load Balancer to redirect all HTTP
+  requests to HTTPS
+- Move the web application EC2 instance into a private subnet and use a NAT
+  gateway
+
+
+2. Assuming the IAM permissions for the S3 bucket are still insecure, would
+   creating VPC private endpoints for S3 prevent the unauthorized access to the
+   secrets bucket?
+
+- Only for users who are not authenticated on the same account
+- Those users can still access the S3 bucket through the VPC private endpoints
+
+
+3. Will applying default encryption setting to the S3 buckets encrypt the data
+   that already exists?
+
+- No, applying default encryption setting to the S3 buckets does not encrypt the
+  data that already exists
+- It only applies to future uploads and existing objects must be re-uploaded
+
+
+4. The changes you made above were done through the console or CLI; describe the
+   outcome if the original CloudFormation templates are applied to this
+   environment?
+
+- The changes made through the console or the CLI would be reset to the settings
+  from the original CloudFormation templates
