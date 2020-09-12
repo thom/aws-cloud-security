@@ -450,7 +450,7 @@ See [E5T2.txt](answers/E5T2.txt.txt).
 
 ### Task 3 - Scanning Infrastructure Code
 
-![Vulnerability scan with Checkov](processes/E5T3.png) _Vulnerability scan with Checkov_
+![Vulnerability scan with Checkov](screenshots/E5T3.png) _Vulnerability scan with Checkov_
 
 ## Exercise 6 - Clean up
 
