@@ -448,15 +448,9 @@ in AWS services, e.g.:
 
 See [E5T2.txt](answers/E5T2.txt.txt).
 
-### _Optional Standout Suggestion_ Task 3 - Scanning Infrastructure Code
+### Task 3 - Scanning Infrastructure Code
 
-- Run an infrastructure as code scanning tool on the cloud formation templates provided in the starter.
-- Take a screenshot of the tool that has correctly identified bad practices.
-- If you had completed the remediations by updating the cloud formation templates, run the scanner and compare outputs showing that insecure configurations were fixed.
-
-**Deliverables**:
-- _Optional_ **E5T3.png** - Screenshot of tool that has identified bad practices.
-- _Optional_ **E5T3.txt** - Answers from prompts in Exercise 5, Task 3.
+![Vulnerability scan with Checkov](processes/E5T3.png) _Vulnerability scan with Checkov_
 
 ## Exercise 6 - Clean up
 
