@@ -367,7 +367,10 @@ TBD
 
 ## Exercise 6 - Clean up
 
-TBD
+To prevent undesired charges don’t forget to: 
+- Disable Security Hub and Guard Duty
+- Delete recipe files uploaded to the S3 buckets
+- Delete CloudFormation stacks
 
 ## Requirements
 
