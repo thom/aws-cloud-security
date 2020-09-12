@@ -1,0 +1,78 @@
+Identify tools that will allow you to do the following: a. Scan infrastructure
+as code templates. b. Scan AMI’s or containers for OS vulnerabilities. c. Scan
+an AWS environment for cloud configuration vulnerabilities.
+
+For each tool - identify an example compliance violation or vulnerability which
+it might expose.
+
+
+Scan infrastructure as code templates
+
+- [Checkov](https://www.checkov.io/): Scans cloud infrastructure managed in
+  Terraform, Cloudformation, Kubernetes, Arm templates or Serverless Framework
+  and detects misconfigurations
+- [TFLint](https://github.com/terraform-linters/tflint): Terraform linter
+  focused on possible errors, best practices, etc.
+- [Terrafirma](https://github.com/wayfair/terrafirma): Terraform static analysis
+  tool designed for detecting security misconfigurations
+- [Terrascan](https://www.accurics.com/products/terrascan/): Provides
+  out-of-the-box policies so that you can scan IaC against common policy
+  standards such as the CIS Benchmark
+- [Cloudsploit](https://cloudsploit.com/cloudformation): Plugin-based scans, API
+  access and web GUI
+- [Cfripper](https://github.com/Skyscanner/cfripper): Library and CLI security
+  analyzer for AWS CloudFormation templates
+
+These tools help to detect misconfigurations such as too permissive security
+groups, missing encryption settings, etc. before the infrastructure is deployed.
+
+
+Scan AMI’s or containers for OS vulnerabilities
+
+- [Anchore](https://anchore.com/): Inspects, analyzes, and certifies Docker
+  images
+- [Clair](https://github.com/quay/clair): Vulnerability scanner and static
+  analysis tool for container images
+- [Dagda](https://github.com/eliasgranderubio/dagda/): Performs static analysis
+  of known vulnerabilities and uses the ClamAV anti-virus engine to scan and
+  detect trojans, viruses, and malware contained within Docker images
+- [OpenSCAP](https://www.open-scap.org/): Provides a set of tools for scanning
+  and compliance management, including oscap-docker, which can scan a container
+  image
+- [Trivy](https://github.com/aquasecurity/trivy): Vulnerability scanner for
+  containers and other artifacts
+
+These tools scan containers for known vulnerabilities such as outdated operating
+systems, applications and libraries, e.g.:
+- Old operating systems known vulnerabilities
+- Detecting trojans, viruses and malware
+
+
+Scan an AWS environment for cloud configuration vulnerabilities
+
+- [AWS GuardDuty](https://aws.amazon.com/guardduty/): Threat detection service
+  that continuously monitors for malicious activity and unauthorized behavior to
+  protect your AWS accounts, workloads, and data stored in Amazon S3
+- [AWS Inspector](https://aws.amazon.com/inspector/): Automatically assesses applications for exposure,
+  vulnerabilities, and deviations from best practices
+- [AWS Security Hub](https://aws.amazon.com/security-hub/): Aggregates,
+  organizes, and prioritizes security alerts, or findings, from multiple AWS
+  services, such as Amazon GuardDuty, Amazon Inspector, Amazon Macie, AWS
+  Identity and Access Management (IAM) Access Analyzer, and AWS Firewall
+  Manager, as well as from AWS Partner solutions
+- [AWS Config](https://aws.amazon.com/config/): Enables assessing, auditing, and
+  evaluating the configurations of AWS resources
+- [AWS CloudTrail](https://aws.amazon.com/cloudtrail/): Log, continuously
+  monitor, and retain account activity related to actions across AWS
+  infrastructure
+- [Cloud Custodian](https://github.com/cloud-custodian/cloud-custodian): Rules
+  engine for managing public cloud accounts and resources
+- [Prowler](https://github.com/toniblyx/prowler): AWS account security
+  configuration assessment, auditing, and hardening tool
+
+These tools allow to continuously monitor for malicious activity and
+unauthorized behavior to protect your AWS accounts, workloads, and data stored
+in AWS services, e.g.:
+- Weak password rules
+- Violations of least priviledge
+- Accounts without MFA

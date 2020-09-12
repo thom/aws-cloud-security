@@ -353,17 +353,110 @@ See [E4T4.txt](answers/E4T4.txt).
 
 ## Exercise 5 - Designing a DevSecOps Pipeline
 
-### Task 1: Design a DevSecOps pipeline
+![DevOps pipeline](processes/DevOpsPipeline.png) _DevOps pipeline_
 
-TBD
+The high-level steps are as follows:
+
+1. The user makes a change to the application code or OS configuration for a
+   service
+2. Once the change is committed to source, a build is kicked off resulting in an
+   AMI or a container image
+3. The infrastructure as code is updated with the new AMI or container image to
+   use
+4. Changes to cloud configuration or infrastructure as code may have also been
+   committed
+5. A deployment to the environment ensues applying the changes
+
+### Task 1:  Design a DevSecOps pipeline
+
+Add additional security steps to the DevOps pipeline:
+- Infrastructure as code compliance scanning
+- AMI or container image scanning
+- Post-deployment compliance scanning
+
+![DevSecOps pipeline](processes/DevSecOpsPipline.png) _DevSecOps pipeline_
 
 ### Task 2 - Tools and Documentation
+      
+Tools to incorporate into the pipeline to ensure that security vulnerabilities are found:
 
-TBD
+#### Scan infrastructure as code templates
+- [Checkov](https://www.checkov.io/): Scans cloud infrastructure managed in
+  Terraform, Cloudformation, Kubernetes, Arm templates or Serverless Framework
+  and detects misconfigurations
+- [TFLint](https://github.com/terraform-linters/tflint): Terraform linter
+  focused on possible errors, best practices, etc.
+- [Terrafirma](https://github.com/wayfair/terrafirma): Terraform static analysis
+  tool designed for detecting security misconfigurations
+- [Terrascan](https://www.accurics.com/products/terrascan/): Provides
+  out-of-the-box policies so that you can scan IaC against common policy
+  standards such as the CIS Benchmark
+- [Cloudsploit](https://cloudsploit.com/cloudformation): Plugin-based scans, API
+  access and web GUI
+- [Cfripper](https://github.com/Skyscanner/cfripper): Library and CLI security
+  analyzer for AWS CloudFormation templates
 
-### Task 3 - Scanning Infrastructure Code (Optional)
+These tools help to detect misconfigurations such as too permissive security
+groups, missing encryption settings, etc. before the infrastructure is deployed.
 
-TBD
+#### Scan AMI’s or containers for OS vulnerabilities
+- [Anchore](https://anchore.com/): Inspects, analyzes, and certifies Docker
+  images
+- [Clair](https://github.com/quay/clair): Vulnerability scanner and static
+  analysis tool for container images
+- [Dagda](https://github.com/eliasgranderubio/dagda/): Performs static analysis
+  of known vulnerabilities and uses the ClamAV anti-virus engine to scan and
+  detect trojans, viruses, and malware contained within Docker images
+- [OpenSCAP](https://www.open-scap.org/): Provides a set of tools for scanning
+  and compliance management, including oscap-docker, which can scan a container
+  image
+- [Trivy](https://github.com/aquasecurity/trivy): Vulnerability scanner for
+  containers and other artifacts
+
+These tools scan containers for known vulnerabilities such as outdated operating
+systems, applications and libraries, e.g.:
+- Old operating systems known vulnerabilities
+- Detecting trojans, viruses and malware
+
+#### Scan an AWS environment for cloud configuration vulnerabilities
+- [AWS GuardDuty](https://aws.amazon.com/guardduty/): Threat detection service
+  that continuously monitors for malicious activity and unauthorized behavior to
+  protect your AWS accounts, workloads, and data stored in Amazon S3
+- [AWS Inspector](https://aws.amazon.com/inspector/): Automatically assesses applications for exposure,
+  vulnerabilities, and deviations from best practices
+- [AWS Security Hub](https://aws.amazon.com/security-hub/): Aggregates,
+  organizes, and prioritizes security alerts, or findings, from multiple AWS
+  services, such as Amazon GuardDuty, Amazon Inspector, Amazon Macie, AWS
+  Identity and Access Management (IAM) Access Analyzer, and AWS Firewall
+  Manager, as well as from AWS Partner solutions
+- [AWS Config](https://aws.amazon.com/config/): Enables assessing, auditing, and
+  evaluating the configurations of AWS resources
+- [AWS CloudTrail](https://aws.amazon.com/cloudtrail/): Log, continuously
+  monitor, and retain account activity related to actions across AWS
+  infrastructure
+- [Cloud Custodian](https://github.com/cloud-custodian/cloud-custodian): Rules
+  engine for managing public cloud accounts and resources
+- [Prowler](https://github.com/toniblyx/prowler): AWS account security
+  configuration assessment, auditing, and hardening tool
+
+These tools allow to continuously monitor for malicious activity and
+unauthorized behavior to protect your AWS accounts, workloads, and data stored
+in AWS services, e.g.:
+- Weak password rules
+- Violations of least priviledge
+- Accounts without MFA
+
+See [E5T2.txt](answers/E5T2.txt.txt).
+
+### _Optional Standout Suggestion_ Task 3 - Scanning Infrastructure Code
+
+- Run an infrastructure as code scanning tool on the cloud formation templates provided in the starter.
+- Take a screenshot of the tool that has correctly identified bad practices.
+- If you had completed the remediations by updating the cloud formation templates, run the scanner and compare outputs showing that insecure configurations were fixed.
+
+**Deliverables**:
+- _Optional_ **E5T3.png** - Screenshot of tool that has identified bad practices.
+- _Optional_ **E5T3.txt** - Answers from prompts in Exercise 5, Task 3.
 
 ## Exercise 6 - Clean up
 
