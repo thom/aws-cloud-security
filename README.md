@@ -49,8 +49,8 @@
 
 The objective is to deploy the CloudFormation stacks that will create the above
 environment.
- 
-The AMIs specified in the CloudFormation template exist in the us-east-1 (N.
+
+The AMIs specified in the CloudFormation template exists in the us-east-1 (N.
 Virginia) region. It is necessary to set this as default region when deploying
 resources for this project.
 
@@ -60,7 +60,7 @@ resources for this project.
 ```
 aws cloudformation create-stack --region us-east-1 --stack-name c3-s3 --template-body file://c3-s3.yml
 ```
- 
+
 Expected example output:
 ```
 {
@@ -72,34 +72,34 @@ Expected example output:
 ```
 aws cloudformation create-stack --region us-east-1 --stack-name c3-vpc --template-body file://c3-vpc.yml
 ```
- 
+
 Expected example output:
 ```
 {
     "StackId": "arn:aws:cloudformation:us-east-1:853001741663:stack/c3-vpc/8ce78590-f46c-11ea-9b06-1214c28caebf"
 }
 ```
- 
+
 ##### Deploy the Application Stack 
 Specify a pre-existing key-pair name:
 
 ```
 aws cloudformation create-stack --region us-east-1 --stack-name c3-app --template-body file://c3-app.yml --parameters ParameterKey=KeyPair,ParameterValue=<add key pair name> --capabilities CAPABILITY_IAM
 ```
- 
+
 Expected example output:
 ```
 {
     "StackId": "arn:aws:cloudformation:us-east-1:853001741663:stack/c3-app/a0c7d760-f46f-11ea-acd6-0e3edd8361ed"
 }
 ```
- 
+
 #### 2. Upload data to S3 buckets
 Upload the free recipes to the free recipe S3 bucket:  
 ```
 aws s3 cp free_recipe.txt s3://<BucketNameRecipesFree>/ --region us-east-1
 ```
- 
+
 Upload the secret recipes to the secret recipe S3 bucket:  
 ```
 aws s3 cp secret_recipe.txt s3://<BucketNameRecipesSecret>/ --region us-east-1
@@ -169,7 +169,7 @@ Recommendations on how to remediate the vulnerabilities:
    requests to HTTPS
 
 5. Attached EBS volumes should be encrypted at-rest: Enable EBS server-side
-   encryption 
+   encryption
 
 See [E2T2.txt](answers/E2T2.txt).
 
@@ -179,9 +179,9 @@ Now you will run scripts that will simulate the following attack conditions:
 - Making an SSH connection to the application server using brute force password
   cracking
 - Capturing secret recipe files from the s3 bucket using stolen API keys
- 
+
 ### Task 1: Brute force attack to exploit SSH ports facing the internet and an insecure configuration on the server
- 
+
 #### 1. Log in to the attack simulation server using your SSH key pair
 ```
 ssh -i <your private key file> ubuntu@<AttackInstanceIP>
@@ -208,7 +208,7 @@ Wait 10 - 15 minutes and check AWS Guard Duty.
   SSH password.
 
 ![Guard Duty findings specific to the attack](screenshots/E3T1_guardduty.png) _Guard Duty findings specific to the attack_
- 
+
 ##### Research the AWS Guard Duty documentation page and explain how GuardDuty may have detected this attack - i.e. what was its source of information?
 
 Amazon GuardDuty offers threat detection that enables to continuously monitor
@@ -224,18 +224,18 @@ In this case, GuardDuty detected the attack by scanning Amazon VPC Flow Logs for
 login attempts on port 22 (SSH).
 
 See [E3T1.txt](answers/E3T1.txt).
- 
+
 ### Task 2: Accessing Secret Recipe Data File from S3
- 
+
 Imagine a scenario where API keys used by the application server to read data
 from S3 were discovered and stolen by the brute force attack. This provides the
-attack instance the same API privileges as the application instance. 
+attack instance with the same API privileges as the application instance. 
 
 Test this scenario by attempting to use the API to read data from the secrets S3
 bucket.
- 
+
 #### 1. Run the following API calls to view and download files from the secret recipes S3 bucket
- 
+
 ```
 # view the files in the secret recipes bucket
 aws s3 ls s3://<BucketNameRecipesSecret>/ --region us-east-1
@@ -262,7 +262,7 @@ As a Cloud Architect, you have been asked to apply security best practices to th
   server security group
 - Disable SSH password login on the application server instance
 
-#### 2. Neither instance should have had access to the secret recipes bucket; in the instance that API credentials were compromised. how could access to sensitive data have been prevented ?
+#### 2. Neither instance should have had access to the secret recipes bucket; in the instance that API credentials were compromised. how could access to sensitive data have been prevented?
 - Enforce default encryption through S3 bucket policy
 - Restrict access to only specific IAM roles, i.e. using a new role specifically
   for accessing the S3 bucket (least privilege access)
@@ -280,12 +280,12 @@ sudo vi /etc/ssh/sshd_config
 # Find this line:
 PasswordAuthentication yes
 
-# change it to:
+# Change it to:
 PasswordAuthentication no
 
-# save and exit
+# Save and exit
 
-#restart SSH server
+# Restart SSH server
 sudo service ssh restart
 ```
 
@@ -319,7 +319,7 @@ default ([Amazon S3 Default Encryption for S3 Buckets](https://docs.aws.amazon.c
 
 ![S3 bucket policy](screenshots/E4T2_s3encryption.png) _S3 bucket policy_
 
-### Task 3: Check Monitoring Tools to see if the Changes that were made have Reduced the Number of Findings
+### Task 3: Check Monitoring Tools to see if the changes that were made have Reduced the Number of Findings
 
 ![Security Hub after reevaluating the number of findings](screenshots/E4T3_securityhub.png) _Security Hub after reevaluating the number of findings_
 
@@ -359,8 +359,8 @@ The high-level steps are as follows:
 
 1. The user makes a change to the application code or OS configuration for a
    service
-2. Once the change is committed to source, a build is kicked off resulting in an
-   AMI or a container image
+2. Once the change is committed to the source, a build is kicked off resulting
+   in an AMI or a container image
 3. The infrastructure as code is updated with the new AMI or container image to
    use
 4. Changes to cloud configuration or infrastructure as code may have also been
@@ -377,7 +377,7 @@ Add additional security steps to the DevOps pipeline:
 ![DevSecOps pipeline](processes/DevSecOpsPipline.png) _DevSecOps pipeline_
 
 ### Task 2 - Tools and Documentation
-      
+
 Tools to incorporate into the pipeline to ensure that security vulnerabilities are found:
 
 #### Scan infrastructure as code templates
@@ -411,7 +411,7 @@ groups, missing encryption settings, etc. before the infrastructure is deployed.
   and compliance management, including oscap-docker, which can scan a container
   image
 - [Trivy](https://github.com/aquasecurity/trivy): Vulnerability scanner for
-  containers and other artifacts
+  containers and other artefacts
 
 These tools scan containers for known vulnerabilities such as outdated operating
 systems, applications and libraries, e.g.:
@@ -425,7 +425,7 @@ systems, applications and libraries, e.g.:
 - [AWS Inspector](https://aws.amazon.com/inspector/): Automatically assesses applications for exposure,
   vulnerabilities, and deviations from best practices
 - [AWS Security Hub](https://aws.amazon.com/security-hub/): Aggregates,
-  organizes, and prioritizes security alerts, or findings, from multiple AWS
+  organizes and prioritizes security alerts, or findings, from multiple AWS
   services, such as Amazon GuardDuty, Amazon Inspector, Amazon Macie, AWS
   Identity and Access Management (IAM) Access Analyzer, and AWS Firewall
   Manager, as well as from AWS Partner solutions
@@ -443,7 +443,7 @@ These tools allow to continuously monitor for malicious activity and
 unauthorized behavior to protect your AWS accounts, workloads, and data stored
 in AWS services, e.g.:
 - Weak password rules
-- Violations of least priviledge
+- Violations of least privilege
 - Accounts without MFA
 
 See [E5T2.txt](answers/E5T2.txt.txt).
